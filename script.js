@@ -24,11 +24,6 @@ $(document).ready(function() {
     }) 
 });
 
-
-
-// if clicked don't click again
-
-
 function changeTurn() {
     if (turn == "X") {
         turn = "O";
