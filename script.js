@@ -1,65 +1,68 @@
-const buttonOne = document.getElementsByClassName('div-button')
-const cells = document.querySelectorAll(".cell")
-const startBtn = $("#start-button")
+const startBtn = $("#restart-button")
 
-let clicked = [];
-var turn = "X"
 let gameRunning = true;
+
+var clicked = [];
+var turn = "X"
 
 // for each cell click, change text in cell
 if (gameRunning == true) {
     $(document).ready(function() {
-        $(".cell").each(function(index) {
+        $(".cell").each(function() {
             $(this).click(function() {
-                let x = $(this).attr("index");
-                if (clicked.includes(x)) {
+                let index = $(this).attr("index");
+                if (clicked.includes(index)) {
                     // re run the turn
                 } else {
                     $(this).text(turn);
                     console.log($(this).attr("index"));
-                    clicked.push($(this).attr("index"));
+                    clicked.push(index);
                     $("#debug").text(clicked);
                     ChangeTurn();
-                }
-                if (clicked.length == 9) {
-                    $("#end").text("Draw")
                 }
             })
         }) 
     });
 }
 
-// draw check
-if (clicked.length == 9) {
-    $("#end").text("Draw");
+// restarts the game
+$(document).ready(function() {
+    Initialise()
+});
+// restarts on restart button click
+$(document).ready(function() {
+    $(startBtn).click(function() {
+        Initialise()
+    });
+});
+
+
+// initialise
+function Initialise() {
+    var clicked = [];
+    var turn = "X"
+    $(".cell").each(function() {
+        $(this).text("") 
+    });
+    $("#debug").text(clicked);
+    $("#end").text("In play");
 }
 
-// changes the turn
+// on button click, add the turn into the cell
+// put that cell into the checked list
+
+// changes turn
 function ChangeTurn() {
     if (turn == "X") {
         turn = "O";
     } else {
         turn = "X"
     }
+    // changes turn text
     $("#turn").text(`${turn}'s turn`);
 }
 
-// restarts the game
-$(document).ready(function() {
-    $("#start-button").click(function() {
-        clicked = [];
-        $(".cell").each(function(index) {
-            $(this).text("") 
-        });
-        $("#debug").text(clicked);
-        $("#end").text("In play");
-    });
-});
-
-// initialise
-// on button click, add the turn into the cell
-// put that cell into the checked list
-// win conditions
+// win conditions; gameRunning = false
 // draw conditions
 // display win / draw
-// restart game
+// restart game; initialise
