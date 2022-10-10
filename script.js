@@ -1,10 +1,8 @@
 const buttonOne = document.getElementsByClassName('div-button')
 const cells = document.querySelectorAll(".cell")
-const startBtn = document.getElementById("start-button")
+const startBtn = $("#start-button")
 
-// startBtn.addEventListener("click", start)
-
-let clicked = []
+let clicked = [];
 var turn = "X"
 
 
@@ -26,6 +24,11 @@ $(document).ready(function() {
     }) 
 });
 
+
+
+// if clicked don't click again
+
+
 function changeTurn() {
     if (turn == "X") {
         turn = "O";
@@ -34,7 +37,12 @@ function changeTurn() {
     }
 }
 
-// if clicked don't click again !
-
-
-
+$(document).ready(function() {
+    $("#start-button").click(function() {
+        clicked = [];
+        $(".cell").each(function(index) {
+            $(this).text("") 
+        });
+        $("#debug").text(clicked);
+    });
+});
