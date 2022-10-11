@@ -19,13 +19,6 @@ var turn = "X"
 // starts the game on load
 initialise()
 
-// restarts on restart button click
-$(document).ready(function() {
-    $(startBtn).click(function() {
-        initialise()
-    });
-});
-
 // initialise
 function initialise() {
     gameRunning = true;
@@ -42,26 +35,26 @@ function initialise() {
 $(document).ready(function() {
     $(".cell").each(function() {
         $(this).click(function() {
-            let index = $(this).attr("index");
-            // checks if already clicked
-            if (clicked.includes(index)) {
-                // re run the turn
-            // if not already clicked
-            } else {
-                updateCell(cell)
-                $(this).text(turn);
-                console.log($(this).attr("index"));
-                // put that cell into the checked list in position of the index
-                clicked[index] = index;
-                $("#debug").text(clicked);
+            if (gameRunning == true) {
+                let index = $(this).attr("index");
+                updateCell($(this), index)
                 checkWinner();
             }
         })
-    }) 
+    })
 });
 
-function updateCell(cell) {
-
+function updateCell(cell, index) {
+    // checks if already clicked
+    if (clicked[index] != "") {
+        return // cancel the click 
+    } else {
+        cell.text(turn);
+        console.log(cell.attr("index"));
+        // put that cell into the checked list in position of the index
+        clicked[index] = turn;
+        $("#debug").text(clicked);
+    }
 }
 
 // changes turn
@@ -78,7 +71,7 @@ function changeTurn() {
 // checks win conditions
 function checkWinner() {
     let roundWon = false;
-    for (let i = 0; i > winConditions.length; i++) {
+    for (let i = 0; i < winConditions.length; i++) {
         const condition = winConditions[i];
         const cellA = clicked[condition[0]]
         const cellB = clicked[condition[1]]
@@ -87,6 +80,7 @@ function checkWinner() {
         if (cellA == "" || cellB == "" || cellC == "") {
             continue;
         }
+
         if (cellA == cellB && cellB == cellC) {
             roundWon = true;
             break;
@@ -97,11 +91,13 @@ function checkWinner() {
     if (roundWon == true) {
         $("#status").text(`${turn} won`);
         gameRunning = false;
+        $("#debug").text(`gameRunning: ${gameRunning}`)
     }
     // draw
     else if (!clicked.includes("")) {
         $("#status").text(`Draw`);
         gameRunning = false;
+        $("#debug").text(`gameRunning: ${gameRunning}`)
     }
     // if not finished change turn
     else {
@@ -109,6 +105,9 @@ function checkWinner() {
     }
 }
 
-
-// display win / draw
-// restart game; initialise
+// restarts on restart button click
+$(document).ready(function() {
+    $(startBtn).click(function() {
+        initialise()
+    });
+});
