@@ -91,13 +91,11 @@ function checkWinner() {
     if (roundWon == true) {
         $("#status").text(`${turn} won`);
         gameRunning = false;
-        $("#debug").text(`gameRunning: ${gameRunning}`)
     }
     // draw
     else if (!clicked.includes("")) {
         $("#status").text(`Draw`);
         gameRunning = false;
-        $("#debug").text(`gameRunning: ${gameRunning}`)
     }
     // if not finished change turn
     else {
@@ -111,3 +109,8 @@ $(document).ready(function() {
         initialise()
     });
 });
+
+// to add:
+//     win counter per side
+//     would require someone to be player 1 and player 2
+//     alternate between player 1 and player 2 being x at the start
