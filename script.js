@@ -1,32 +1,31 @@
 const startBtn = $("#restart-button")
 
-let gameRunning = true;
+let gameRunning = false;
 
 var clicked = [];
 var turn = "X"
 
 
 // starts the game on load
-$(document).ready(function() {
-    Initialise()
-});
+initialise()
 
 // restarts on restart button click
 $(document).ready(function() {
     $(startBtn).click(function() {
-        Initialise()
+        initialise()
     });
 });
 
 // initialise
-function Initialise() {
+function initialise() {
+    gameRunning = true;
     clicked = [];
     turn = "X"
     $(".cell").each(function() {
         $(this).text("") 
     });
     $("#debug").text(clicked);
-    $("#end").text("In play");
+    $("#status").text("In play");
 }
 
 // on button click, add the turn into the cell
@@ -45,7 +44,8 @@ if (gameRunning == true) {
                     // put that cell into the checked list
                     clicked.push(index);
                     $("#debug").text(clicked);
-                    ChangeTurn();
+                    checkWinner()
+                    changeTurn();
                 }
             })
         }) 
@@ -54,7 +54,7 @@ if (gameRunning == true) {
 
 
 // changes turn
-function ChangeTurn() {
+function changeTurn() {
     if (turn == "X") {
         turn = "O";
     } else {
@@ -64,6 +64,10 @@ function ChangeTurn() {
     $("#turn").text(`${turn}'s turn`);
 }
 
+// checks win conditions
+function checkWinner() {
+    let roundWon = false;
+}
 // win conditions; gameRunning = false
 // draw conditions
 // display win / draw
