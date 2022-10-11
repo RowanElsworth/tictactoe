@@ -5,17 +5,44 @@ let gameRunning = true;
 var clicked = [];
 var turn = "X"
 
-// for each cell click, change text in cell
+
+// starts the game on load
+$(document).ready(function() {
+    Initialise()
+});
+
+// restarts on restart button click
+$(document).ready(function() {
+    $(startBtn).click(function() {
+        Initialise()
+    });
+});
+
+// initialise
+function Initialise() {
+    clicked = [];
+    turn = "X"
+    $(".cell").each(function() {
+        $(this).text("") 
+    });
+    $("#debug").text(clicked);
+    $("#end").text("In play");
+}
+
+// on button click, add the turn into the cell
 if (gameRunning == true) {
     $(document).ready(function() {
         $(".cell").each(function() {
             $(this).click(function() {
                 let index = $(this).attr("index");
+                // checks if already clicked
                 if (clicked.includes(index)) {
                     // re run the turn
+                // if not already clicked
                 } else {
                     $(this).text(turn);
                     console.log($(this).attr("index"));
+                    // put that cell into the checked list
                     clicked.push(index);
                     $("#debug").text(clicked);
                     ChangeTurn();
@@ -25,31 +52,6 @@ if (gameRunning == true) {
     });
 }
 
-// restarts the game
-$(document).ready(function() {
-    Initialise()
-});
-// restarts on restart button click
-$(document).ready(function() {
-    $(startBtn).click(function() {
-        Initialise()
-    });
-});
-
-
-// initialise
-function Initialise() {
-    var clicked = [];
-    var turn = "X"
-    $(".cell").each(function() {
-        $(this).text("") 
-    });
-    $("#debug").text(clicked);
-    $("#end").text("In play");
-}
-
-// on button click, add the turn into the cell
-// put that cell into the checked list
 
 // changes turn
 function ChangeTurn() {
